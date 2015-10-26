@@ -1,0 +1,32 @@
+1.
+
+#12 factorial loop
+
+
+factorial<- 1
+
+for (i in 2:12) {
+   factorial <- factorial*i
+
+}
+
+print(factorial)
+
+
+2.
+
+vector <- c(4:10)*5
+
+
+3.
+
+#a, b and c are already given
+a<-1
+b<-4
+c<-3
+
+quadratic1 <- (-b + sqrt(b^2 -4*a*c))/(2*a)
+
+quadratic2 <- (-b - sqrt(b^2 -4*a*c))/(2*a)
+
+print( paste("x = ", quadratic1, " and ", quadratic2))
