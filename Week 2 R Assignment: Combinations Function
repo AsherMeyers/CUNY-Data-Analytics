@@ -1,0 +1,37 @@
+# CUNY-Data-Analytics
+Week 2 Assignment R
+
+#Compute the number of combinations of selecting k items 
+#from n possibilities
+
+combinations <- function(n, k) {
+  
+  n_factorial <- 1
+  k_factorial <- 1
+  delta_factorial <- 1
+  
+  #n factorial
+  for (i in 1:n) {
+    n_factorial <- n_factorial * i
+  }
+  
+  #k factorial
+  for (i in 1:k) {
+    k_factorial <- k_factorial * i
+  }
+  
+  #(n-k) factorial
+  for (i in 1:(n-k)) {
+    delta_factorial <- delta_factorial * i
+  }
+  
+  combines <- n_factorial/k_factorial/delta_factorial
+  
+  #return solution
+  return(combines)
+}
+
+#Test case of choose(5,3), should yield the answer 5!/(3!2!) = 10
+combinations(5,3)
+
+
