@@ -3,10 +3,10 @@ DROP TABLE IF EXISTS Reviews;
 
 CREATE TABLE Videos
 (
-  unique_id int PRIMARY KEY,
-  title varchar(30),
-  length int,
-  URL varchar(100)
+  unique_id int PRIMARY KEY NOT NULL,
+  title varchar(30) NOT NULL,
+  length int NOT NULL,
+  URL varchar(100) NOT NULL
 );
 INSERT INTO Videos (unique_id, title, length, URL) 
 VALUES (1, 'Gangnam Style', 252, 'https://www.youtube.com/watch?v=9bZkp7q19f0');
@@ -21,11 +21,11 @@ SELECT * FROM Videos;
 
 CREATE TABLE Reviews
 (
-   review_id int PRIMARY KEY,
-   user_name varchar(20),
-   rating int,
-   review varchar(120),
-   video_reviewed int
+   review_id int PRIMARY KEY NOT NULL,
+   user_name varchar(20) NOT NULL,
+   rating int NOT NULL,
+   review varchar(120) NOT NULL,
+   video_reviewed int NOT NULL
 );
 
 INSERT INTO Reviews (review_id, user_name, rating, review, video_reviewed) 
