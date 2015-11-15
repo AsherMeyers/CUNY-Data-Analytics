@@ -1,4 +1,4 @@
-Title
+Mushroom Data
 ========================================================
 
 Read in the mushroom data
