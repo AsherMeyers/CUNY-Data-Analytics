@@ -1,0 +1,642 @@
+---
+title: "Week 3 Math Bridge Assignment"
+author: "Asher Meyers"
+date: "November 10, 2015"
+output: html_document
+---
+
+Chapter 6, Exercises 1-10, p 248, David Lane Introduction to Statistics
+1. To be a scientific theory, the theory must be potentially disconfirmable. 
+
+2. What is the difference between a faith-based explanation and a scientific
+explanation?
+
+A faith-based explanation can change to accommodate all possible results, and is untestable. A scientific theory is testable, i.e. disconfirmable.
+
+3. What does it mean for a theory to be parsimonious?
+To use the least amount of assumptions adequate to explain a given phenomenon.
+
+4. Define reliability in terms of parallel forms.
+
+Reliability is the correlation between parallel forms of a given test.
+
+5. Define true score.
+
+The mean result of infinite trials, provided repeated trials do not alter the mean non-randomly.
+
+6. What is the reliability if the true score variance is 80 and the test score
+variance is 100?
+
+```{r}
+80/100
+```
+ 
+reliability = 80/100 = 0.8
+
+7.What statistic relates to how close a score on one test will be to a score on a parallel form?
+Reliability, aka rtest,test
+
+8. What is the effect of test length on the reliability of a test?
+Increasing test length, i.e. increasing the number of items on a test, increases the reliability.
+
+9. Distinguish between predictive validity and construct validity.
+Predictive validity is a measure of how successfully a test predicts a relevant behavior, trait or performance.
+
+Construct validity is a measure of how much a test’s results correlate with other tests that are trying to predict the same quality.
+
+10. What is the theoretical maximum correlation of a test with a criterion if the test has a reliability of .81?
+
+```{r}
+sqrt(0.81)
+```
+
+
+Chapter 9, Exercises 6-15, p 324-326, David Lane Introduction to Statistics
+
+6. If the correlation between reading achievement and math achievement in the population of fifth graders were 0.60, what would be the probability that in a sample of 28 students, the sample correlation coefficient would be greater than 0.65?
+transformation of to a normally distributed variable with a known standard error.
+
+
+z' =  0.5*ln([1+r]/[1-r])
+Standard error of z: 1/sqrt(N-3)
+
+ 
+
+N = pairs of scores
+
+----------------------------
+
+z’ value of 0.60: 0.5*ln[(1 + 0.60)/(1-0.60)] = 0.5*ln(1.6/0.4) = 0.693
+
+```{r}
+correl <- 0.60
+zscore1 <- 0.5*log((1 + correl)/(1-correl))
+zscore1
+```
+
+z’ value of 0.65: 0.5*ln[(1 + 0.65)/(1-0.65)] = 0.5*ln(1.65/0.35) =0.775
+
+```{r}
+correl <- 0.65
+zscore2 <- 0.5*log((1 + correl)/(1-correl))
+zscore2
+```
+
+Standard error for 28 students: 1/sqrt(28-3) = 0.2
+
+
+```{r}
+SE <- 1/sqrt(28-3)
+SE
+```
+
+
+z’ of 0.65 – z’ of 0.60 = 0.775 – 0.693 = 0.082
+
+```{r}
+diffz <- zscore2 - zscore1
+diffz
+```
+
+delta of z’ / standard error = z score;
+0.082 / 0.2 = 0.41
+
+```{r}
+zz <- diffz/SE
+zz
+```
+p(z>0.41) = 1 - 0.6591 = 0.340
+
+```{r}
+1-pnorm(zz)
+```
+
+There is a 34% chance that the sample correlation would be greater than 0.65.
+
+
+7. If numerous samples of N = 15 are taken from a uniform distribution and a relative frequency distribution of the means is drawn, what would be the shape of the frequency distribution?
+
+A normal distribution.
+
+8. A normal distribution has a mean of 20 and a standard deviation of 10. Two scores are sampled randomly from the distribution and the second score is subtracted from the first. What is the probability that the difference score will be greater than 5? Hint: Read the Variance Sum Law section of Chapter 3.
+ 
+SDsum = sqrt(variance1 + variance2) = sqrt(100 + 100) = 10sqrt(2) = 14.142
+Z score of >=5:    5/14.142 =  0.35
+ P(Z>0.35) = 0.6915; probability = 1 – 0.6368 = 0.3632
+ 
+```{r}
+#SD of pooled sample
+SDsum <- sqrt(10^2 + 10^2)
+SDsum
+
+#Z score of difference >5
+zscore <- 5/SDsum
+zscore
+
+#probability of difference > 5
+1-pnorm(zscore)
+
+```
+
+9. What is the shape of the sampling distribution of r? In what way does the shape depend on the size of the population correlation?
+
+The closer r is to zero, the more symmetric it is. As the absolute value of r approaches 1, the sampling distribution of r becomes more skewed. When r=0, the sampling distribution is normal.
+
+10. If you sample one number from a standard normal distribution, what is the probability it will be 0.5?
+Zero.
+
+11. A variable is normally distributed with a mean of 120 and a standard deviation of 5. Four scores are randomly sampled. What is the probability that the mean of the four scores is above 127?
+
+Sample mean SD =sigma/sqrt(n) = 5/sqrt(4)  = 2.5
+Z = (sample mean – population mean) / sample mean SD 
+Z = (127-120)/2.5 = 2.8 SD from population mean
+P(z > 2.8) = 1- 0.9974 = 0.26%
+
+```{r}
+#SD of sample mean
+SDmean <- 5/sqrt(4)
+SDmean
+
+#Z score of difference >5
+zscore <- (127-120)/SDsum
+zscore
+
+#probability of difference > 5
+1-pnorm(zscore)
+
+```
+
+12. The correlation between self-esteem and extraversion is .30. A sample of 84 is taken. 
+a. What is the probability that the correlation will be less than 0.10? 
+z’ population: 0.5*ln(1.3/0.7)
+z’ sample: 0.5*ln(1.1/0.9)
+z’ delta: 0.5*ln(1.3*0.9/[0.7*1.1]) = 0.209
+Standard error of z: 1/9
+z’ delta / standard error of z = -1.88
+p(z < -1.88) = 1- 0.9699 = 0.0301
+
+
+z’ value of 0.60: 0.5*ln[(1 + 0.60)/(1-0.60)] = 0.5*ln(1.6/0.4) = 0.693
+
+```{r}
+correlp <- 0.30
+correls <- 0.10
+N<- 84
+
+ztp <- 0.5*log((1+correlp)/(1-correlp))
+ztp
+
+zts <- 0.5*log((1+correls)/(1-correls))
+zts
+
+zdelta <- ztp - zts
+zdelta
+
+SEz <- 1/sqrt(N-3)
+SEz
+
+
+zscore <- zdelta / SEz
+zscore
+
+1-pnorm(zscore)
+```
+
+
+
+b. What is the probability that the correlation will be greater than 0.25?
+z’ population: 0.5*ln(1.3/0.7)
+z’ sample: 0.5*ln(1.25/0.75)
+z’ delta: 0.5*ln(1.3*0.75/[0.7*1.25]) = 0.054
+Standard error of z: 1/9
+z’ delta / standard error of z = -0.487
+p(z > -0.487) = 0.6879 
+
+
+```{r}
+correlp <- 0.30
+correls <- 0.25
+N<- 84
+
+ztp <- 0.5*log((1+correlp)/(1-correlp))
+ztp
+
+zts <- 0.5*log((1+correls)/(1-correls))
+zts
+
+zdelta <- ztp - zts
+zdelta
+
+SEz <- 1/sqrt(N-3)
+SEz
+
+
+zscore <- zdelta / SEz
+zscore
+
+pnorm(zscore)
+```
+
+
+
+13. The mean GPA for students in School A is 3.0; the mean GPA for students in School B is 2.8. The standard deviation in both schools is 0.25. The GPAs of both schools are normally distributed. If 9 students are randomly sampled from each school, what is the probability that:
+a. the sample mean for School A will exceed that of School B by 0.5 or more?
+
+ 
+Sigma of MA - MB = sqrt(.25*2/9) = (.5/3)*sqrt(2) = sqrt(2)/6 = 0.2357
+Mean difference: 3.0 – 2.8 = 0.2
+Z score = (0.5-0.2) / 0.2357 = 1.27
+p(z>1.27) = 1 – 0.8980 = 0.1020
+
+```{r}
+
+SDdiff <- sqrt(.25*2/9)
+SDdiff
+
+diff <- 3 - 2.8
+diff
+
+zscore <- (0.5-diff)/SDdiff
+zscore
+
+1-pnorm(zscore)
+
+```
+
+
+b. the sample mean for School B will be greater than the sample mean for School A?
+Sigma of MA - MB = sqrt(.25*2/9) = (.5/3)*sqrt(2) = sqrt(2)/6 = 0.2357
+Mean difference: 3.0-2.8 = 0.2
+Z score = 0.2 / 0.2357 = 0.85
+p(z>0.85) = 1 – 0.8023 = 0.1977
+
+
+
+```{r}
+
+SDdiff <- sqrt(.25*2/9)
+SDdiff
+
+diff <- 3 - 2.8
+diff
+
+zscore <- (diff)/SDdiff
+zscore
+
+1-pnorm(zscore)
+
+```
+
+
+
+14. In a city, 70% of the people prefer Candidate A. Suppose 30 people from this city were sampled.
+a. What is the mean of the sampling distribution of p?
+70% or 21 people, support candidate A
+
+b. What is the standard error of p?
+```{r}
+sqrt(0.7*0.3/30)
+```
+
+c. What is the probability that 80% or more of this sample will prefer Candidate A?
+z = (0.8-0.7) / 0.0837 = 1.195
+```{r}
+z<- (0.8-0.7) / 0.0837
+```
+
+p(z>1.195) = 1 – 0.8849 = 0.1151
+
+```{r}
+1-pnorm(1.195)
+```
+
+15. When solving problems where you need the sampling distribution of r, what is the reason for converting from r to z’?
+
+The sampling distribution of r is not normal, except when r = 0. z’ transforms the sampling distribution of r into a normal distribution, which allows us to use the conventional z score to assess the probability of various sampling outcomes.
+
+
+Chapter 10, Exercises 10-18, David Lane Introduction to Statistics
+
+10.The effectiveness of a blood-pressure drug is being investigated. How might an experimenter demonstrate that, on average, the reduction in systolic blood pressure is 20 or more?
+
+I would conduct an experiment with two groups, a control and a treatment group, with random assignment. Then I’d measure the impact of the treatment on the treatment group, and measure the difference between groups, and see if the 95% confidence interval for the difference in means (i.e. the treatment effect) is entirely positive.
+
+11. A population is known to be normally distributed with a standard deviation of 2.8. 
+(a) Compute the 95% confidence interval on the mean based on the following sample of nine: 8, 9, 10, 13, 14, 16, 17, 20, 21. 
+
+```{r}
+m <- mean(c(8, 9, 10, 13, 14, 16, 17, 20, 21))
+m
+```
+
+Sample mean:  14.2
+
+```{r}
+SD <- 2.8/sqrt(9)
+SD
+```
+
+SD of sample means: 2.8/3 = 0.9333
+
+Two tailed Z score of 95% = One tailed z score of 97.5% = 1.96
+```{r}
+z <- qnorm(0.975)
+z
+```
+
+CI = sample mean +/-  SD of sample means * z score
+CI = 14.2 +/- 0.9333*1.96 = 14.2 +/- 1.83 = (12.39, 16.05)
+
+```{r}
+m - SD*z
+m + SD*z
+```
+ 
+
+(b) Now compute the 99% confidence interval using the same data.
+
+```{r}
+z <- qnorm(0.995)
+z
+```
+
+```{r}
+m - SD*z
+m + SD*z
+```
+
+Two tailed Z score of 99% = 2.58
+CI of 99% = 14.2 +/- 0.9333*2.58 = (11.81, 16.63)
+
+12. A person claims to be able to predict the outcome of flipping a coin. This person is correct 16/25 times. Compute the 95% confidence interval on the proportion of times this person can predict coin flips correctly. What conclusion can you draw about this test of his ability to predict the future?
+
+```{r}
+p <- 16/25
+p
+```
+
+sample mean: p = 0.64
+
+```{r}
+z <- qnorm(0.975)
+z
+```
+
+z score: 1.96
+SD of sample mean: sqrt(p*(1-p)/n) 
+
+```{r}
+n<-25
+SD <- sqrt(p*(1-p)/n) 
+SD
+```
+
+SD of sample mean: sqrt(0.8*0.2/25) = 0.4/5 = 0.08
+
+Confidence interval: p -/+ z*SD
+
+```{r}
+p - SD*z
+p + SD*z
+```
+
+Confidence Interval: 0.64 +/-1.96*0.08 = (0.4832, 0.7968)
+
+Given that the interval includes the value expected due to change (p = 0.5), we cannot conclude with >95% confidence that he can predict the future.
+
+13. What does it mean that the variance (computed by dividing by N) is a biased statistic?
+When the value of a statistic does not approach the value of the parameter it is meant to approximate.
+
+14. A confidence interval for the population mean computed from an N of 16 ranges from 12 to 28. A new sample of 36 observations is going to be taken. You can’t know in advance exactly what the confidence interval will be because it depends on the random sample. Even so, you should have some idea of what it will be. Give your best estimation.
+
+```{r}
+qnorm(1/32)
+qnorm(31/32)
+```
+
+12: 3rd percentile – z = -1.86
+16: 97th percentile – z= 1.86
+
+```{r}
+zspan <- qnorm(31/32) - qnorm(1/32)
+zspan
+```
+
+1.86 - -1.86 = 3.72 SD
+
+```{r}
+range <- 28-12
+range
+```
+range = 16
+
+```{r}
+#Standard error of sample mean
+SD <- range/zspan
+SD
+```
+1 SD = 16/3.72 = 4.3
+
+```{r}
+avg <- mean(c(12,28))
+avg
+```
+
+Mean: average(12, 28)  = 20
+
+```{r}
+SDmean <- SD / sqrt(36)
+SDmean
+```
+Sample Mean SD: 4.3 / 6 = 0.72
+
+t score of 95%, df = 15: 2.131
+```{r}
+tscore<-qt(0.975, 15)
+tscore
+```
+
+CI: 20 +/- 0.72*2.131 = 20 +/- 1.53 = (18.47, 21.53)
+
+```{r}
+
+avg - SDmean*tscore
+avg + SDmean*tscore
+```
+
+15. You take a sample of 22 from a population of test scores, and the mean of your sample is 60. 
+(a) You know the standard deviation of the population is 10. What is the 99% confidence interval on the population mean. 
+
+#SD of sample means: SD/sqrt(n) = 2.132
+```{r}
+
+SDmean <- 10/sqrt(22)
+```
+
+z score of 99%: 2.58
+```{r}
+
+z <- qnorm(0.995)
+```
+
+
+99% CI: 60 +/- 2.58*2.132
+= (54.50, 65.49)
+
+```{r}
+
+60 - z*SDmean
+60 + z*SDmean
+```
+
+
+(b) Now assume that you do not know the population standard deviation, but the standard deviation in your sample is 10. What is the 99% confidence interval on the mean now?
+SD of sample means: 10/sqrt(22) = 2.132
+```{r}
+
+SDmean <- 10/sqrt(22)
+```
+t score of 99%, df = 21: 2.831
+```{r}
+
+tscore <- qt(.995,21)
+```
+
+99% CI: 60 +/- 2.831*2.132
+= (53.96, 66.04)
+
+```{r}
+60 - tscore*SDmean
+60 + tscore*SDmean
+```
+
+16. You read about a survey in a newspaper and find that 70% of the 250 people sampled prefer Candidate A. You are surprised by this survey because you thought that more like 50% of the population preferred this candidate. Based on this sample, is 50% a possible population proportion? Compute the 95% confidence interval to be sure.
+
+p = 0.7
+SD of sample mean: sqrt(0.7*0.3/250) = sqrt(0.21/250) = 2.90%
+```{r}
+
+SDmean <- sqrt(0.7*0.3/250)
+```
+z score: 1.96
+```{r}
+
+z <- qnorm(.975)
+```
+CI half-width: 5.68%
+```{r}
+
+z*SDmean
+```
+95% CI: (64.32%, 75.68%)
+```{r}
+0.7 - z*SDmean
+0.7 + z*SDmean
+```
+
+A 50% population proportion is technically possible but not likely, if the sample was unbiased and honest  (social desirability bias).
+
+ 
+Other questions:
+
+
+17. Heights for teenage boys and girls were calculated. The mean height for the sample of 12 boys was 174 cm and the variance was 62. For the sample of 12 girls, the mean was 166 cm and the variance was 65. Assuming equal variances and normal distributions in the population, 
+(a) What is the 95% confidence interval on the difference between population means? 
+Point estimate: 174 – 166 = 8 cm
+ 
+SD of difference: sqrt(62/12 + 65/12) = 3.253
+```{r}
+SDdiff <-sqrt(62/12 + 65/12)
+SDdiff
+```
+
+df = 24 -2 = 22
+
+
+t score: 2.074
+```{r}
+tscore <- qt(.975,22)
+tscore
+```
+95% CI: 8 +/- 3.25*2.074 = (1.26, 14.74)
+
+```{r}
+8 - tscore*SDdiff
+8 + tscore*SDdiff
+```
+
+(b) What is the 99%  confidence interval on the difference between population means? 
+SD of difference: sqrt(62/12 + 65/12) = 3.253
+t score: 2.819
+```{r}
+tscore <- qt(.995,22)
+tscore
+```
+
+95% CI: 8 +/- 3.25*2.819 = (-1.16, 17.16)
+```{r}
+8 - tscore*SDdiff
+8 + tscore*SDdiff
+```
+
+(c) Do you think it is very unlikely that the mean difference in the population is about 5? Why or why not?
+Yes, it is unlikely, because the confidence intervals are broad and any given range around an integer has a low likelihood.
+
+18. You were interested in how long the average psychology major at your college studies per night, so you asked 10 psychology majors to tell you the amount they study. They told you the following times: 2, 1.5, 3, 2, 3.5, 1, 0.5, 3, 2, 4.
+(a) Find the 95% confidence interval on the population mean. 
+
+Sample mean: 2.25
+Sample SD: 1.11
+t-score: 2.26
+Interval margin of error: 2.26*1.11 = 2.5
+Interval: (0, 4.77)
+
+```{r}
+samplestudy <- c(2, 1.5, 3, 2, 3.5, 1, 0.5, 3, 2, 4)
+
+#mean
+meanstudy <- mean(samplestudy)
+meanstudy
+
+#sample Standard Deviation
+sampleSD<- sd(samplestudy)
+
+#t score
+tscore <- qt(.975,9)
+tscore
+
+#margin of error
+margin <-tscore*sampleSD
+
+#Confidence interval
+meanstudy - margin
+#negative values not possible, lower bound of interval raised to 0.
+
+meanstudy + margin
+
+```
+
+
+
+(b) Find the 90% confidence interval on the population mean
+
+t-score: 1.833
+Interval margin: 1.833*1.11 = 2.03
+Confidence interval: (0.22, 4.28)
+
+```{r}
+#t score
+tscore <- qt(.95,9)
+tscore
+
+#margin of error
+margin <-tscore*sampleSD
+
+#Confidence interval
+meanstudy - margin
+
+meanstudy + margin
+
+```
+
+
