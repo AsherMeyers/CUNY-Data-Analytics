@@ -3,16 +3,18 @@ Mushroom Data
 
 Read in the mushroom data
 ```{r}
-mushroomdata <- read.csv(file = "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data", head=FALSE, sep=",")
+mushroomdata <- read.csv(file = "https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data",
+                         head=FALSE, sep=",")
 ```
 
 
 Store the list of column names
 ```{r}
 mushroomcolnames<- c('edibility', 'cap-shape', 'cap-surface','cap-color', 'bruises', 'odor', 'gill-attachment', 
-                     'gill-spacing', 'gill-size', 'gill-color', 'stalk-shape', 'stalk-root', 'stalk-surface-above-ring', 
-                     'stalk-surface-below-ring', 'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 
-                     'veil-color', 'ring-number', 'ring-type', 'spore-print-color', 'population', 'habitat')
+                     'gill-spacing', 'gill-size', 'gill-color', 'stalk-shape', 'stalk-root', 
+                     'stalk-surface-above-ring', 'stalk-surface-below-ring', 'stalk-color-above-ring', 
+                     'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number', 'ring-type', 
+                     'spore-print-color', 'population', 'habitat')
 ```
 
 Name the columns of the mushroom data frame
