@@ -1,0 +1,76 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS groups; 
+DROP TABLE IF EXISTS rooms;
+DROP TABLE IF EXISTS access;
+
+
+
+CREATE TABLE users 
+(
+   user_ID int PRIMARY KEY,
+   user_name varchar(30) NOT NULL,
+   group_name varchar(30)
+);
+
+INSERT INTO users (user_ID, user_name, group_name) VALUES (1, "Modesto", "I.T.");
+INSERT INTO users (user_ID, user_name, group_name) VALUES (2, "Ayine", "I.T.");
+INSERT INTO users (user_ID, user_name, group_name) VALUES (3, "Christopher", "Sales");
+INSERT INTO users (user_ID, user_name, group_name) VALUES (4, "Cheong Woo", "Sales");
+INSERT INTO users (user_ID, user_name, group_name) VALUES (5, "Saulat", "Administration");
+INSERT INTO users (user_ID, user_name, group_name) VALUES (6, "Heidy", NULL);
+
+
+CREATE TABLE groups
+(
+   group_ID int PRIMARY KEY,
+   group_name varchar(30)
+);
+
+INSERT INTO groups (group_ID, group_name) VALUES (1, "I.T."); 
+INSERT INTO groups (group_ID, group_name) VALUES (2, "Sales");
+INSERT INTO groups (group_ID, group_name) VALUES (3, "Administration");
+INSERT INTO groups (group_ID, group_name) VALUES (4, "Operations");
+
+
+CREATE TABLE rooms
+(
+   room_ID int PRIMARY KEY,
+   room_name varchar(30)
+);
+
+INSERT INTO rooms (room_ID, room_name) VALUES (1, "101");
+INSERT INTO rooms (room_ID, room_name) VALUES (2, "102");
+INSERT INTO rooms (room_ID, room_name) VALUES (3, "Auditorium A");
+INSERT INTO rooms (room_ID, room_name) VALUES (4, "Auditorium B");
+
+CREATE TABLE access
+(
+	access_ID int PRIMARY KEY,
+    room_name varchar(30),
+    group_name varchar(30)
+);
+
+INSERT INTO access (access_ID, room_name, group_name) VALUES (1, "101", "I.T.");
+INSERT INTO access (access_ID, room_name, group_name) VALUES (2, "102", "I.T.");
+INSERT INTO access (access_ID, room_name, group_name) VALUES (3, "102", "Sales");
+INSERT INTO access (access_ID, room_name, group_name) VALUES (4, "Auditorium A", "Sales");
+
+/* Show all groups and the users within them, including empty groups */
+SELECT g.group_name, u.user_name 
+FROM groups g
+LEFT JOIN users u
+ON u.group_name = g.group_name;
+
+/*Show all rooms, and the groups assigned to each room */
+SELECT r.room_name, a.group_name
+FROM rooms r
+LEFT JOIN access a
+ON r.room_name = a.room_name;
+
+/*Show all users, their groups, and the rooms they can access */
+
+SELECT u.user_name, u.group_name, a.room_name
+FROM users u
+LEFT JOIN access a
+ON u.group_name = a.group_name
+ORDER by u.user_name ASC, u.group_name ASC, a.room_name ASC;
