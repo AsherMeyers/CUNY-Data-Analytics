@@ -4,7 +4,7 @@ author: "Asher Meyers"
 date: "November 17, 2015"
 output: html_document
 ---
-#Install ggplot2 package
+Install ggplot2 package
 
 ```{r}
 install.packages("ggplot2")
@@ -27,27 +27,27 @@ for (i in 1:ncol(diamonds)) {
 quant_diamonds <- diamonds[,c(quant_cols)]
 ```
 
-#Min, 25th %ile, Median, Mean, 75th %ile and max 
-#of quantitative diamond variables
+Min, 25th %ile, Median, Mean, 75th %ile and max 
+of quantitative diamond variables
 ```{r}
 apply(quant_diamonds,2,summary)
 ```
 
-#Diamond color frequency
+Diamond color frequency
 ```{r}
 table(diamonds$color)
 ```
 
-#Frequency of diamond cuts by color
+Frequency of diamond cuts by color
 ```{r}
 table(diamonds$cut,diamonds$color)
 ```
 
-#Plot of a single numeric variable - histogram of carats
+Plot of a single numeric variable - histogram of carats
 ```{r}
 hist(diamonds$carat, main = "Histogram of Diamond Carats", xlab = "Carats")
 ```
-#Plot of two numeric variables - X: Carats, Y: Price
+Plot of two numeric variables - X: Carats, Y: Price
 ```{r}
 plot(diamonds$carat,diamonds$price, xlab= "Carats", ylab= "Price", cex = 0.5)
 abline(lm(diamonds$price~diamonds$carat), col = "blue", lwd = 2)
