@@ -14,7 +14,9 @@ round(coefs,values)
  
       [,1] [,2] [,3]
 [1,]    1    2   -3
+
 [2,]    2    1   -3
+
 [3,]    0    0    0
 
 There are infinite solutions.
