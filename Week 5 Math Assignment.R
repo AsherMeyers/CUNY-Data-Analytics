@@ -88,6 +88,9 @@ sd_dif <- sd(hflights2$DepDelay-hflights2$ArrDelay)/sqrt(length(hflights2$DepDel
 interval_width <- sd_dif*qnorm(0.975)
 lower_bound <- dif_means - interval_width
 higher_bound <- dif_means + interval_width
+dif_conf_interval <- c(lower_bound, higher_bound)
+dif_conf_interval
+
 
 #Correlation between x and y
 cormatrix <- cor(hflights2$DepDelay, hflights2$ArrDelay)
