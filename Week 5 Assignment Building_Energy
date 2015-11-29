@@ -1,0 +1,104 @@
+DROP TABLE IF EXISTS EnergyCategories;
+DROP TABLE IF EXISTS EnergyTypes;
+DROP TABLE IF EXISTS Buildings;
+
+CREATE TABLE EnergyCategories (
+ category_id int PRIMARY KEY,
+ energy_category varchar(30)
+ );
+
+CREATE TABLE EnergyTypes (
+  type_id int PRIMARY KEY,
+  energy_category varchar(30),
+  energy_type varchar(30)
+
+);
+
+INSERT INTO EnergyTypes (type_id, energy_category, energy_type) 
+   VALUES (1, "Fossil", "Electricity");
+INSERT INTO EnergyTypes (type_id, energy_category, energy_type) 
+   VALUES (2, "Fossil", "Gas");
+INSERT INTO EnergyTypes (type_id, energy_category, energy_type) 
+   VALUES (3, "Fossil", "Steam");
+INSERT INTO EnergyTypes (type_id, energy_category, energy_type) 
+   VALUES (4, "Fossil", "Fuel Oil");
+INSERT INTO EnergyTypes (type_id, energy_category, energy_type) 
+   VALUES (5, "Renewable", "Solar");
+INSERT INTO EnergyTypes (type_id, energy_category, energy_type) 
+   VALUES (6, "Renewable", "Wind");
+
+SELECT t.energy_category, t.energy_type 
+FROM EnergyTypes t
+LEFT JOIN EnergyCategories c
+ON c.energy_category = t.energy_category;
+
+
+CREATE TABLE Buildings (
+  building_name varchar(40),
+  energy_type varchar(30)
+  );
+  
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Empire State Building", "Electricity");
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Empire State Building", "Gas");
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Empire State Building", "Steam");
+
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Chrysler Building", "Electricity");
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Chrysler Building", "Steam");
+
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Borough of Manhattan Community College", "Electricity");
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Borough of Manhattan Community College", "Steam");
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Borough of Manhattan Community College", "Solar");
+  
+SELECT building_name, energy_type FROM Buildings;
+
+SELECT b.building_name, t.energy_type
+FROM Buildings b
+LEFT JOIN EnergyTypes t
+ON t.energy_type = b.energy_type;
+
+INSERT INTO EnergyTypes (type_id, energy_type, energy_category) 
+  VALUES (7, "Geothermal","Renewable");
+
+INSERT INTO Buildings (building_name, energy_type) 
+  VALUES ("Bronx Lion House", "Geothermal");
+INSERT INTO Buildings (building_name, energy_type)
+  VALUES ("Brooklyn Childrens Museum", "Electricity");
+INSERT INTO Buildings (building_name, energy_type)
+  VALUES ("Brooklyn Childrens Museum", "Geothermal");
+
+/* Display buildings that use renewable energy */
+SELECT b.building_name, t.energy_type, t.energy_category
+FROM Buildings b
+LEFT JOIN EnergyTypes t 
+ON b.energy_type = t.energy_type
+WHERE t.energy_category = "Renewable";
+
+SELECT energy_type, COUNT(energy_type)
+FROM Buildings
+GROUP BY energy_type;
+
+/*9d:
+Suppose you want to track changes over time in energy type preferences 
+in New York City buildings. What information should you add to each table? 
+What might a report that shows the trends over time look like?
+
+Answer: I would add a field for 'date_added', the date when a given source
+of energy was added to a building. 
+
+Additional historical data on energy sources that were removed 
+would make the tracking even more accurate. Eg, maybe the Bronx Lion
+House used to run on grid electricity - I'd include the date when grid electricity
+was removed.
+
+A report of trends over time would show an increasing frequency of renewable
+energy types; it would also show a greater number of energy types per building
+as wind and solar are not feasible as an exclusive source of energy, at least
+not without lots of expensive batteries. */
