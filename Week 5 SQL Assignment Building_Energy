@@ -59,6 +59,8 @@ INSERT INTO Buildings (building_name, energy_type)
   
 SELECT building_name, energy_type FROM Buildings;
 
+#5. Write a JOIN statement that shows the buildings and associated energy types for each building.
+
 SELECT b.building_name, t.energy_type
 FROM Buildings b
 LEFT JOIN EnergyTypes t
